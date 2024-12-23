@@ -1,6 +1,6 @@
-import { WebpackRule } from "./WebpackRule.js";
-import { IBuildPath, Makefile } from "esmakefile";
-import { Configuration } from "webpack";
+import { WebpackRule } from './WebpackRule.js';
+import { IBuildPath, Makefile } from 'esmakefile';
+import { Configuration } from 'webpack';
 
 /**
  * Adds a webpack target to the build system
@@ -9,7 +9,7 @@ import { Configuration } from "webpack";
  * @returns The target that represents running webpack
  */
 export function addWebpack(make: Makefile, config: Configuration): IBuildPath {
-  const rule = new WebpackRule(config);
-  make.add(rule);
-  return rule.targets(); // 'webpack'
+	const rule = new WebpackRule(config);
+	make.add(rule);
+	return rule.targets(); // 'webpack'
 }

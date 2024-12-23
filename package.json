@@ -1,36 +1,36 @@
 {
-  "name": "esmakefile-webpack5",
-  "version": "0.1.0",
-  "type": "module",
-  "scripts": {
-    "build": "tsc",
-    "test": "mocha dist/spec",
-    "lint": "eslint ."
-  },
-  "keywords": [
-    "esmakefile",
-    "webpack",
-    "rule"
-  ],
-  "author": "Nicholas Gulachek",
-  "license": "ISC",
-  "description": "esmakefile rules to build webpack 5 targets",
-  "dependencies": {
-    "esmakefile": "^0.6.1",
-    "webpack": "^5.97.1"
-  },
-  "devDependencies": {
-    "@types/chai": "^5.0.1",
-    "@types/mocha": "^10.0.10",
-    "chai": "^5.1.2",
-    "mocha": "^11.0.1",
-    "typescript": ">=4.7.4 <5.6.0",
-    "eslint": "^8.57.1",
-    "eslint-plugin-mocha": "^10.5.0",
-    "eslint-plugin-node": "^11.1.0",
-    "@typescript-eslint/eslint-plugin": "^7.18.0",
-    "prettier": "^3.3.3"
-  },
-  "main": "dist/index.js",
-  "types": "types"
+	"name": "esmakefile-webpack5",
+	"version": "0.1.0",
+	"type": "module",
+	"scripts": {
+		"build": "tsc",
+		"test": "mocha dist/spec",
+		"lint": "eslint ."
+	},
+	"keywords": [
+		"esmakefile",
+		"webpack",
+		"rule"
+	],
+	"author": "Nicholas Gulachek",
+	"license": "ISC",
+	"description": "esmakefile rules to build webpack 5 targets",
+	"dependencies": {
+		"esmakefile": "^0.6.1",
+		"webpack": "^5.97.1"
+	},
+	"devDependencies": {
+		"@types/chai": "^5.0.1",
+		"@types/mocha": "^10.0.10",
+		"chai": "^5.1.2",
+		"mocha": "^11.0.1",
+		"typescript": ">=4.7.4 <5.6.0",
+		"eslint": "^8.57.1",
+		"eslint-plugin-mocha": "^10.5.0",
+		"eslint-plugin-node": "^11.1.0",
+		"@typescript-eslint/eslint-plugin": "^7.18.0",
+		"prettier": "^3.3.3"
+	},
+	"main": "dist/index.js",
+	"types": "types"
 }

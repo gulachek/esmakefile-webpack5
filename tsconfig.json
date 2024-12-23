@@ -1,19 +1,19 @@
 {
-  "include": ["src/**/*.ts"],
-  "compilerOptions": {
-    "rootDir": "src",
-    "target": "es2017",
-    "lib": ["es2021"],
-    "module": "node16",
-    "moduleResolution": "node16",
-    "allowSyntheticDefaultImports": true,
-    "esModuleInterop": true,
-    "declaration": true,
-    "declarationDir": "types",
-    "outDir": "dist",
-    "noImplicitAny": true,
-    "noImplicitOverride": true,
-    "forceConsistentCasingInFileNames": true,
-    "isolatedDeclarations": true
-  }
+	"include": ["src/**/*.ts"],
+	"compilerOptions": {
+		"rootDir": "src",
+		"target": "es2017",
+		"lib": ["es2021"],
+		"module": "node16",
+		"moduleResolution": "node16",
+		"allowSyntheticDefaultImports": true,
+		"esModuleInterop": true,
+		"declaration": true,
+		"declarationDir": "types",
+		"outDir": "dist",
+		"noImplicitAny": true,
+		"noImplicitOverride": true,
+		"forceConsistentCasingInFileNames": true,
+		"isolatedDeclarations": true
+	}
 }
