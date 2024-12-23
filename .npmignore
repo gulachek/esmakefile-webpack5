@@ -1,0 +1,9 @@
+src
+example
+.eslintignore
+.eslintrc.json
+.github
+.prettierignore
+.prettierrc.json
+README.md
+tsconfig.json

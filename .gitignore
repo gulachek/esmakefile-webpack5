@@ -4,3 +4,4 @@ dist
 types
 build
 .scratch
+esmakefile-webpack5*.tgz
