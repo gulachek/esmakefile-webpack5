@@ -7,3 +7,4 @@ example
 .prettierrc.json
 README.md
 tsconfig.json
+validateReleaseTag.cjs

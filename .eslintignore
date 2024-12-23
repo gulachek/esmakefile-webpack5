@@ -2,3 +2,4 @@ dist
 types
 build
 node_modules
+validateReleaseTag.cjs
