@@ -16,6 +16,8 @@ jobs:
       - run: npm run build
       - name: Lint
         run: npm run lint
+      - name: Check format
+        run: npm run check-format
       - name: Run Tests
         run: npm run test
   example-test:

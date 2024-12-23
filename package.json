@@ -5,7 +5,9 @@
 	"scripts": {
 		"build": "tsc",
 		"test": "mocha dist/spec",
-		"lint": "eslint ."
+		"lint": "eslint .",
+		"format": "prettier -w .",
+		"check-format": "prettier -c ."
 	},
 	"keywords": [
 		"esmakefile",
