@@ -30,7 +30,11 @@ export class WebpackRule implements IRule {
         args.addPostreq(resolve(dep));
       }
 
-      await writeFile(args.abs(Path.build("webpack")), stats.toString());
+      try {
+        await writeFile(args.abs(Path.build("webpack")), stats.toString());
+      } catch (ex) {
+        reject(ex);
+      }
 
       promiseResolve(!stats.hasErrors());
     });

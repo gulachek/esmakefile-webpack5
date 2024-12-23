@@ -18,7 +18,7 @@ describe("WebpackRule", function () {
   const output = Path.build("entry.cjs");
 
   function resetRequire() {
-    delete require.cache[require.resolve(make.abs(output))];
+    delete require.cache[make.abs(output)];
   }
 
   beforeEach(async () => {
@@ -95,6 +95,51 @@ describe("WebpackRule", function () {
 
     const newMod = require(cjsMod);
     expect(newMod.five).to.equal(5);
+  });
+
+  it("rebuilds when a transitive dependency changes", async () => {
+    const dep = "./dep.js";
+    await writeFile("./package.json", '{"type": "commonjs"}');
+    await writeFile(dep, "module.exports = { n: 4 };");
+    await writeFile(
+      entry,
+      `
+										const { n } = require('./dep.js');
+										module.exports = { n };
+										`
+    );
+
+    const rule = new WebpackRule({
+      entry,
+      target: "node",
+      output: {
+        path: make.buildRoot,
+        filename: output.basename,
+        library: {
+          type: "commonjs",
+        },
+      },
+      mode: "production",
+    });
+
+    make.add(rule);
+
+    let result = await updateTarget(make, "webpack");
+    expect(result).to.be.true;
+
+    const cjsMod = make.abs(output);
+
+    const mod = require(cjsMod);
+    expect(mod.n).to.equal(4);
+
+    await writeFile(dep, "module.exports = { n: 5 };");
+    result = await updateTarget(make, "webpack");
+    expect(result).to.be.true;
+
+    resetRequire();
+
+    const newMod = require(cjsMod);
+    expect(newMod.n).to.equal(5);
   });
 
   it("does not rebuild if entry does not change", async () => {
