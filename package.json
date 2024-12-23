@@ -1,15 +1,27 @@
 {
-  "name": "esmakefile-webpack",
-  "version": "1.0.0",
-  "main": "index.js",
+  "name": "esmakefile-webpack5",
+  "version": "0.1.0",
+  "type": "module",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "keywords": [],
-  "author": "",
+  "keywords": [
+    "esmakefile",
+    "webpack",
+    "rule"
+  ],
+  "author": "Nicholas Gulachek",
   "license": "ISC",
-  "description": "",
+  "description": "esmakefile rules to build webpack 5 targets",
   "dependencies": {
+    "esmakefile": "^0.6.1",
     "webpack": "^5.97.1"
+  },
+  "devDependencies": {
+    "@types/chai": "^5.0.1",
+    "@types/mocha": "^10.0.10",
+    "chai": "^5.1.2",
+    "mocha": "^11.0.1",
+    "typescript": "^5.7.2"
   }
 }
