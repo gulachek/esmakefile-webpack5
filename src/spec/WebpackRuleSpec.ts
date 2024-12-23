@@ -63,7 +63,7 @@ describe('addWebpack', function () {
 	});
 
 	it('registers a "webpack" target', async () => {
-		await writeFile(entry, 'module.exports = { four: 4 };');
+		await writeFile(entry, 'module.exports = { one: 1 };');
 
 		addWp();
 
@@ -71,11 +71,11 @@ describe('addWebpack', function () {
 		expect(result).to.be.true;
 
 		const mod = await myRequire(make.abs(output));
-		expect(mod.four).to.equal(4);
+		expect(mod.one).to.equal(1);
 	});
 
 	it('rebuilds if entrypoint changes', async () => {
-		await writeFile(entry, 'module.exports = { four: 4 };');
+		await writeFile(entry, 'module.exports = { two: 2 };');
 
 		addWp();
 
@@ -85,14 +85,15 @@ describe('addWebpack', function () {
 		const modScript = make.abs(output);
 
 		const mod = await myRequire(modScript);
-		expect(mod.four).to.equal(4);
+		expect(mod.two).to.equal(2);
 
-		await writeFile(entry, 'module.exports = { five: 5 };');
+		await waitMs(1000);
+		await writeFile(entry, 'module.exports = { three: 3 };');
 		result = await updateTarget(make, 'webpack');
 		expect(result).to.be.true;
 
 		const newMod = await myRequire(modScript);
-		expect(newMod.five).to.equal(5);
+		expect(newMod.three).to.equal(3);
 	});
 
 	it('rebuilds when a transitive dependency changes', async () => {
@@ -116,6 +117,7 @@ describe('addWebpack', function () {
 		const mod = await myRequire(testMod);
 		expect(mod.n).to.equal(4);
 
+		await waitMs(1000);
 		await writeFile(dep, 'module.exports = { n: 5 };');
 		result = await updateTarget(make, 'webpack');
 		expect(result).to.be.true;
@@ -125,14 +127,14 @@ describe('addWebpack', function () {
 	});
 
 	it('does not rebuild if entry does not change', async () => {
-		await writeFile(entry, 'module.exports = { four: 4 };');
+		await writeFile(entry, 'module.exports = { six: 6 };');
 
 		addWp();
 
 		let result = await updateTarget(make, 'webpack');
 		expect(result).to.be.true;
 		const mod = await myRequire(make.abs(output));
-		expect(mod.four).to.equal(4);
+		expect(mod.six).to.equal(6);
 
 		const oldStats = await stat(make.abs(Path.build('webpack')));
 
@@ -144,3 +146,7 @@ describe('addWebpack', function () {
 		expect(newStats.mtimeMs).to.equal(oldStats.mtimeMs);
 	});
 });
+
+function waitMs(ms: number): Promise<void> {
+	return new Promise<void>((res) => setTimeout(res, ms));
+}
