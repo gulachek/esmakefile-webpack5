@@ -1,0 +1,34 @@
+name: Push Tests
+
+on: [push]
+
+jobs:
+  unit-tests:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+      - name: Use Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "22.x"
+      - run: npm ci
+      - run: npm run build
+      - name: Run Tests
+        run: npm run test
+  example-test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Use Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "22.x"
+      - run: npm ci
+      - run: npm run build
+      - name: Verify example builds
+        shell: bash
+        run: |
+          cd example
+          npm ci
+          node make.mjs webpack
