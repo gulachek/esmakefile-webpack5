@@ -2,6 +2,8 @@ import { IBuildPath, IRule, Path, RecipeArgs } from "esmakefile";
 import webpack, { Configuration, Compiler, Stats } from "webpack";
 
 import { resolvers } from "./resolvers.js";
+import { writeFile } from "node:fs/promises";
+import { resolve } from "node:path";
 
 export class WebpackRule implements IRule {
   private config: Configuration;
@@ -17,14 +19,20 @@ export class WebpackRule implements IRule {
   }
 
   recipe(args: RecipeArgs): Promise<boolean> {
-    const { promise, resolve, reject } = resolvers<boolean>();
+    const { promise, resolve: promiseResolve, reject } = resolvers<boolean>();
 
-    this.compiler.run((err?: Error, stats?: Stats) => {
+    this.compiler.run(async (err: Error | undefined, stats: Stats) => {
       if (err) reject(err);
 
-      args.logStream.write(stats.toString());
+      args.logStream.write(stats.toString({ colors: true }));
 
-      resolve(!stats.hasErrors());
+      for (const dep of stats.compilation.fileDependencies) {
+        args.addPostreq(resolve(dep));
+      }
+
+      await writeFile(args.abs(Path.build("webpack")), stats.toString());
+
+      promiseResolve(!stats.hasErrors());
     });
 
     return promise;
