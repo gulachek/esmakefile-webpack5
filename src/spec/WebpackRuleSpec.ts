@@ -5,6 +5,9 @@ import { addWebpack } from "../index.js";
 import { chdir, cwd } from "node:process";
 import { join, resolve } from "node:path";
 
+/* eslint-disable */
+// Really don't care that I'm using 'any' in this context
+
 function loadModule(this: any, content: string, exportName: string): any {
   eval(content);
   return this[exportName];
@@ -14,6 +17,8 @@ async function myRequire(path: string): Promise<any> {
   const jsContent = await readFile(path, "utf8");
   return loadModule.call({}, jsContent, "TestModule");
 }
+
+/* eslint-enable */
 
 describe("addWebpack", function () {
   this.timeout(5000); // 5s becuz webpack slow
