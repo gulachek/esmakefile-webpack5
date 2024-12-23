@@ -1,13 +1,13 @@
 import { expect } from "chai";
 import { mkdir, rm, writeFile, stat } from "node:fs/promises";
 import { Makefile, Path, updateTarget } from "esmakefile";
-import { WebpackRule } from "../index.js";
+import { addWebpack } from "../index.js";
 import { chdir, cwd } from "node:process";
 import { createRequire } from "node:module";
 
 const require = createRequire(new URL(import.meta.url));
 
-describe("WebpackRule", function () {
+describe("addWebpack", function () {
   this.timeout(5000); // 5s becuz webpack slow
 
   const dir = ".scratch/webpack-rule-spec";
@@ -39,7 +39,7 @@ describe("WebpackRule", function () {
   it('registers a "webpack" target', async () => {
     await writeFile(entry, "module.exports = { four: 4 };");
 
-    const rule = new WebpackRule({
+    addWebpack(make, {
       entry,
       target: "node",
       output: {
@@ -51,8 +51,6 @@ describe("WebpackRule", function () {
       },
       mode: "production",
     });
-
-    make.add(rule);
 
     const result = await updateTarget(make, "webpack");
     expect(result).to.be.true;
@@ -64,7 +62,7 @@ describe("WebpackRule", function () {
   it("rebuilds if entrypoint changes", async () => {
     await writeFile(entry, "module.exports = { four: 4 };");
 
-    const rule = new WebpackRule({
+    addWebpack(make, {
       entry,
       target: "node",
       output: {
@@ -76,8 +74,6 @@ describe("WebpackRule", function () {
       },
       mode: "production",
     });
-
-    make.add(rule);
 
     let result = await updateTarget(make, "webpack");
     expect(result).to.be.true;
@@ -109,7 +105,7 @@ describe("WebpackRule", function () {
 										`
     );
 
-    const rule = new WebpackRule({
+    addWebpack(make, {
       entry,
       target: "node",
       output: {
@@ -121,8 +117,6 @@ describe("WebpackRule", function () {
       },
       mode: "production",
     });
-
-    make.add(rule);
 
     let result = await updateTarget(make, "webpack");
     expect(result).to.be.true;
@@ -145,7 +139,7 @@ describe("WebpackRule", function () {
   it("does not rebuild if entry does not change", async () => {
     await writeFile(entry, "module.exports = { four: 4 };");
 
-    const rule = new WebpackRule({
+    addWebpack(make, {
       entry,
       target: "node",
       output: {
@@ -157,8 +151,6 @@ describe("WebpackRule", function () {
       },
       mode: "production",
     });
-
-    make.add(rule);
 
     let result = await updateTarget(make, "webpack");
     expect(result).to.be.true;

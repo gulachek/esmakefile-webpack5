@@ -1,11 +1,11 @@
 import { cli, Path } from "esmakefile";
-import { WebpackRule } from "esmakefile-webpack5";
+import { addWebpack } from "esmakefile-webpack5";
 
 cli((make) => {
   const index = Path.src("src/index.ts");
 
   // from https://webpack.js.org/guides/typescript/
-  const webpack = new WebpackRule({
+  addWebpack(make, {
     entry: make.abs(index),
     module: {
       rules: [
@@ -25,6 +25,4 @@ cli((make) => {
     },
     mode: "development",
   });
-
-  make.add(webpack);
 });
